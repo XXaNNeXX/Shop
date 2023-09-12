@@ -29,8 +29,8 @@ public class ShopService {
             System.out.println("Das gewünschte Produkt " + product + " ist nicht verfügbar");
         } else {
             System.out.println("Deine Bestellung war erfolgreich");
-            orderRepo.addOrder(order, id);
-            orderMapRepo.addOrder(order, id);
+            orderRepo.addOrder(order);
+            orderMapRepo.addOrder(order);
         }
     }
 
@@ -51,12 +51,23 @@ public class ShopService {
 
         Order newOrder = new Order(new Product("Laptop", "2"), "1", OrderStatus.PROCESSING);
 
-        return orderRepo.addOrder(newOrder, "1");
+        return orderRepo.addOrder(newOrder);
     }
 
     public List<Order> orderStatus(OrderStatus status) {
         return orderRepo.getOrders().stream()
                 .filter(order -> order.orderStatus() == status)
                 .toList();
+    }
+
+    /*public Order updateOrder(String orderID, Bestellstatus status) {
+        Order update = orderRepo.getOrderById(orderID);
+        return update.withOrderStatus(status);
+    }*/
+
+    public void updateOrder(String orderID, OrderStatus status) {
+        Order update = orderRepo.getOrderById(orderID).withOrderStatus(status);
+        orderRepo.removeOrder(orderID);
+        orderRepo.addOrder(update);
     }
 }
