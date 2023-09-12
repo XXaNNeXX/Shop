@@ -1,12 +1,17 @@
 package org.example;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         List<Product> myProducts = new ArrayList<>();
         Product handy = new Product("Handy", "1");
@@ -34,10 +39,10 @@ public class Main {
         System.out.println("------------------------------------------");
 
         List<Order> myOrders = new ArrayList<>();
-        Order order1 = new Order(handy, "1", OrderStatus.PROCESSING);
-        Order order2 = new Order(candle, "2", OrderStatus.PROCESSING);
-        Order order3 = new Order(cup, "3", OrderStatus.PROCESSING);
-        Order order4 = new Order(laptop, "4", OrderStatus.PROCESSING);
+        Order order1 = new Order(handy, "1", OrderStatus.PROCESSING, ZonedDateTime.now());
+        Order order2 = new Order(candle, "2", OrderStatus.PROCESSING, ZonedDateTime.now());
+        Order order3 = new Order(cup, "3", OrderStatus.PROCESSING, ZonedDateTime.now());
+        Order order4 = new Order(laptop, "4", OrderStatus.PROCESSING, ZonedDateTime.now());
         myOrders.add(order1);
         myOrders.add(order2);
         System.out.println(myOrders);
@@ -65,6 +70,14 @@ public class Main {
         myMapOrderRepo.addOrder(order1);
         System.out.println(myMapOrderRepo);
 
-
+        Stream<String> lines = Files.lines(Path.of("transactions.txt"));
+        List<String> textLines = lines.toList();
+        textLines.stream()
+                .filter(line -> !line.isEmpty())
+                .map(line -> {
+                    String[] linesSplit = line.split(" ");
+                    return linesSplit[0];
+                })
+                .forEach(System.out::println);
     }
 }
