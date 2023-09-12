@@ -1,10 +1,13 @@
 package org.example;
 
+import java.util.List;
 import java.util.Map;
 
 public interface OrderRepo {
 
-    Order addOrder(Order order, String id);
-    Order removeOrder(Order order, String id);
-    boolean containsOrder(Order order);
+    List<Order> getOrders();
+    Order getOrderById(String id);
+    Order addOrder(Order order);
+    void removeOrder(String id);
+    String toString();
 }
