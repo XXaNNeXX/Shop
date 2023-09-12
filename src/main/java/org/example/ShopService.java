@@ -1,15 +1,14 @@
 package org.example;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.time.ZonedDateTime;
+import java.util.*;
 
 public class ShopService {
 
     private ProductRepo productRepo;
     private OrderListRepo orderRepo;
     private OrderMapRepo orderMapRepo;
+    private IdService uuid;
 
     public ShopService() {
     }
@@ -49,7 +48,7 @@ public class ShopService {
             System.out.println(e.getMessage());
         }
 
-        Order newOrder = new Order(new Product("Laptop", "2"), "1", OrderStatus.PROCESSING);
+        Order newOrder = new Order(new Product("Laptop", "2"), "1", OrderStatus.PROCESSING, ZonedDateTime.now());
 
         return orderRepo.addOrder(newOrder);
     }
@@ -69,5 +68,21 @@ public class ShopService {
         Order update = orderRepo.getOrderById(orderID).withOrderStatus(status);
         orderRepo.removeOrder(orderID);
         orderRepo.addOrder(update);
+    }
+
+    public Map<OrderStatus, Order> getOldestOrderPerStatus(List<Order> orders) {
+        Map<OrderStatus, Order> orderMap = new HashMap<>();
+
+        for (Order order : orders) {
+            OrderStatus status = order.orderStatus();
+            ZonedDateTime time = order.orderTime();
+
+            if (!orderMap.containsKey(status)
+                    || time.isBefore(orderMap.get(status).orderTime())) {
+                orderMap.put(status, order);
+            }
+        }
+
+        return orderMap;
     }
 }
