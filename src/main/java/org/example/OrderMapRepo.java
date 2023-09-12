@@ -1,37 +1,34 @@
 package org.example;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class OrderMapRepo implements OrderRepo {
 
-    private Map<Order, String> orderMap;
+    private Map<String, Order> orderMap;
 
-    public OrderMapRepo() {
+       @Override
+    public List<Order> getOrders() {
+        return new ArrayList<>(orderMap.values());
     }
 
-    public OrderMapRepo(Map<Order, String> orderMap) {
-        this.orderMap = orderMap;
+    public Order getOrderById(String id) {
+        return orderMap.get(id);
     }
 
     @Override
-    public Order addOrder(Order order, String id) {
-        orderMap.put(order, id);
+    public Order addOrder(Order order) {
+        orderMap.put(order.id(), order);
         return order;
     }
 
     @Override
-    public Order removeOrder(Order order, String id) {
-        orderMap.remove(order, id);
-        return order;
+    public void removeOrder(String id) {
+        orderMap.remove(id);
     }
 
-    @Override
-    public boolean containsOrder(Order order) {
-        return orderMap.containsKey(order);
-
-    }
-
-    @Override
+   @Override
     public String toString() {
         return "OrderMapRepo{" +
                 "orderMap=" + orderMap +

@@ -6,32 +6,32 @@ public class OrderListRepo implements OrderRepo {
 
     private List<Order> orders;
 
-    public OrderListRepo() {
-    }
-
-    public OrderListRepo(List<Order> orders) {
-        this.orders = orders;
-    }
-
     public List<Order> getOrders() {
         return orders;
     }
 
-    @Override
-    public Order addOrder(Order order, String id) {
+    public Order getOrderById(String id) {
+        for (Order order : orders) {
+            if (order.id().equals(id)) {
+                return order;
+            }
+        }
+        return null;
+    }
+
+    public Order addOrder(Order order) {
         orders.add(order);
         return order;
     }
-    @Override
-    public Order removeOrder(Order order, String id) {
-        orders.remove(order);
-        return order;
-    }
-    @Override
-    public boolean containsOrder(Order order) {
-        return orders.contains(order);
-    }
 
+    public void removeOrder(String id) {
+        for (Order order : orders) {
+            if (order.id().equals(id)) {
+                orders.remove(order);
+                return;
+            }
+        }
+    }
     @Override
     public String toString() {
         return "OrderListRepo{" +
