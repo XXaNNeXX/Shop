@@ -30,4 +30,10 @@ public class ShopService {
             orderMapRepo.addOrder(order, id);
         }
     }
+
+    public List<Order> orderStatus(OrderStatus status) {
+        return orderRepo.getOrders().stream()
+                .filter(order -> order.orderStatus() == status)
+                .toList();
+    }
 }
