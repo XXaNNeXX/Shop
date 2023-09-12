@@ -13,6 +13,10 @@ public class OrderListRepo implements OrderRepo {
         this.orders = orders;
     }
 
+    public List<Order> getOrders() {
+        return orders;
+    }
+
     @Override
     public Order addOrder(Order order, String id) {
         orders.add(order);
