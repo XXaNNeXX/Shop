@@ -43,9 +43,8 @@ public class Main {
         System.out.println(myOrders);
         System.out.println("------------------------------------------");
 
-        OrderListRepo myOrderRepo = new OrderListRepo(myOrders);
+        OrderListRepo myOrderRepo = new OrderListRepo();
         System.out.println(myOrderRepo);
-        System.out.println(myOrderRepo.containsOrder(order1));
         System.out.println("------------------------------------------");
 
         ShopService service = new ShopService(myProdRepo, myOrderRepo);
@@ -61,9 +60,9 @@ public class Main {
         myMapOrders.put(order2, "3");
         System.out.println(myMapOrders);
 
-        OrderMapRepo myMapOrderRepo = new OrderMapRepo(myMapOrders);
-        myMapOrderRepo.addOrder(order4, "11");
-        myMapOrderRepo.addOrder(order1, "22");
+        OrderMapRepo myMapOrderRepo = new OrderMapRepo();
+        myMapOrderRepo.addOrder(order4);
+        myMapOrderRepo.addOrder(order1);
         System.out.println(myMapOrderRepo);
 
 
