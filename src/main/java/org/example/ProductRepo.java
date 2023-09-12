@@ -1,6 +1,7 @@
 package org.example;
 
 import java.util.List;
+import java.util.Optional;
 
 public class ProductRepo {
 
@@ -27,6 +28,23 @@ public class ProductRepo {
         return products.contains(product);
     }
 
+    /*public Product getProductById(String id) {
+        for (Product product : products) {
+            if (product.id().equals(id)) {
+                return product;
+            }
+        }
+        return null;
+    }*/
+
+    public Optional<Product> getProductById(String id) {
+        for (Product product : products) {
+            if (product.id().equals(id)) {
+                return Optional.of(product);
+            }
+        }
+        return Optional.empty();
+    }
     @Override
     public String toString() {
         return "ProductRepo{" +
