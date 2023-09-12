@@ -34,10 +34,10 @@ public class Main {
         System.out.println("------------------------------------------");
 
         List<Order> myOrders = new ArrayList<>();
-        Order order1 = new Order(handy, "1");
-        Order order2 = new Order(candle, "2");
-        Order order3 = new Order(cup, "3");
-        Order order4 = new Order(laptop, "4");
+        Order order1 = new Order(handy, "1", OrderStatus.PROCESSING);
+        Order order2 = new Order(candle, "2", OrderStatus.PROCESSING);
+        Order order3 = new Order(cup, "3", OrderStatus.PROCESSING);
+        Order order4 = new Order(laptop, "4", OrderStatus.PROCESSING);
         myOrders.add(order1);
         myOrders.add(order2);
         System.out.println(myOrders);
